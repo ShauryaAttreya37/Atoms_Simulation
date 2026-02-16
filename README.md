@@ -4,9 +4,9 @@ A physics-accurate simulator for visualizing **hydrogen atom orbitals** using th
 
 This project computes and visualizes:
 
-[
+$$
 |\psi_{n\ell m}(r,\theta,\phi)|^2
-]
+$$
 
 the **probability density of an electron** in a hydrogen atom.
 
@@ -36,21 +36,21 @@ the **probability density of an electron** in a hydrogen atom.
 
 The hydrogen atom wavefunction separates into radial and angular components:
 
-[
+$$
 \psi_{n\ell m}(r,\theta,\phi)
 =============================
 
 R_{n\ell}(r)
 \cdot
 Y_\ell^m(\theta,\phi)
-]
+$$
 
 Probability density:
 
-[
+$$
 \rho =
 |\psi|^2
-]
+$$
 
 Where:
 
@@ -139,7 +139,7 @@ n=3; l=2; m=1
 
 Radial function:
 
-[
+$$
 R_{n\ell}(r)
 ============
 
@@ -154,13 +154,13 @@ e^{-r/n}
 ,
 L_{n-\ell-1}^{2\ell+1}
 \left(\frac{2r}{n}\right)
-]
+$$
 
 Angular function:
 
-[
+$$
 Y_\ell^m(\theta,\phi)
-]
+$$
 
 Computed using SciPy.
 
@@ -170,23 +170,23 @@ Computed using SciPy.
 
 Simulation uses a spatial grid:
 
-[
+$$
 (x,z)
-]
+$$
 
 Converted to spherical coordinates:
 
-[
+$$
 r = \sqrt{x^2 + y^2 + z^2}
-]
+$$
 
-[
+$$
 \theta = \cos^{-1}(z/r)
-]
+$$
 
-[
+$$
 \phi = \tan^{-1}(y/x)
-]
+$$
 
 ---
 
