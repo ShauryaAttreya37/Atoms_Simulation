@@ -36,10 +36,9 @@ the **probability density of an electron** in a hydrogen atom.
 
 The hydrogen atom wavefunction separates into radial and angular components:
 
-$$
-\psi_{n\ell m}(r,\theta,\phi)
+$\psi_{n\ell m}(r,\theta,\phi)$
 =============================
-
+$$
 R_{n\ell}(r)
 \cdot
 Y_\ell^m(\theta,\phi)
@@ -54,8 +53,8 @@ $$
 
 Where:
 
-* (R_{n\ell}(r)) is the radial function
-* (Y_\ell^m(\theta,\phi)) is the spherical harmonic
+* $(R_{n\ell}(r))$ is the radial function
+* $(Y_\ell^m(\theta,\phi))$ is the spherical harmonic
 
 ---
 
@@ -139,10 +138,9 @@ n=3; l=2; m=1
 
 Radial function:
 
-$$
-R_{n\ell}(r)
+$R_{n\ell}(r)$
 ============
-
+$$
 \sqrt{
 \left(\frac{2}{n}\right)^3
 \frac{(n-\ell-1)!}{2n(n+\ell)!}
