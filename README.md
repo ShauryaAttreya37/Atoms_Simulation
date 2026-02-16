@@ -250,5 +250,4 @@ Useful for:
 ---
 
 ## License
-
-MIT License
+CC - License
