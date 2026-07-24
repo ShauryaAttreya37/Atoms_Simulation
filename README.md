@@ -1,253 +1,102 @@
-# Hydrogen Atom Orbital Simulator (Python)
+# Hydrogen Atom Orbital Simulator
 
-A physics-accurate simulator for visualizing **hydrogen atom orbitals** using the exact analytical solutions of the Schrödinger equation.
+Visualize analytical hydrogen wavefunctions and probability densities on a
+two-dimensional slice through the atom. The project combines a reusable Python
+script with a Jupyter notebook that develops the underlying radial and angular
+solutions.
 
-This project computes and visualizes:
+![Hydrogen orbital density examples](assets/Hydrogen_Density_Plots.png)
 
-$$
-|\psi_{n\ell m}(r,\theta,\phi)|^2
-$$
+## What it computes
 
-the **probability density of an electron** in a hydrogen atom.
-
----
-
-## Features
-
-* Exact analytical hydrogen wavefunctions
-* Supports arbitrary quantum numbers:
-
-  * Principal quantum number: `n`
-  * Angular momentum quantum number: `l`
-  * Magnetic quantum number: `m`
-* Accurate radial and angular components
-* 2D orbital slice visualization
-* Correct nodal structure:
-
-  * Radial nodes
-  * Angular nodes
-* Uses atomic units (`a₀ = 1`)
-* Physically accurate spherical harmonics
-* High-resolution plots
-
----
-
-## Physics Background
-
-The hydrogen atom wavefunction separates into radial and angular components:
-
-$\psi_{n\ell m}(r,\theta,\phi)$
-=============================
-$$
-R_{n\ell}(r)
-\cdot
-Y_\ell^m(\theta,\phi)
-$$
-
-Probability density:
+The stationary hydrogen wavefunction separates as
 
 $$
-\rho =
-|\psi|^2
+\psi_{n\ell m}(r,\theta,\phi)
+=R_{n\ell}(r)Y_\ell^m(\theta,\phi),
 $$
 
-Where:
+and the probability density is $|\psi_{n\ell m}|^2$. The implementation uses
+associated Laguerre polynomials for the normalized radial solution and SciPy's
+spherical harmonics for the angular solution. Distances use atomic units, so
+$a_0=1$.
 
-* $(R_{n\ell}(r))$ is the radial function
-* $(Y_\ell^m(\theta,\phi))$ is the spherical harmonic
+Valid quantum numbers satisfy:
 
----
+- $n \ge 1$
+- $0 \le \ell < n$
+- $-\ell \le m \le \ell$
 
-## Orbital Types Supported
+## Repository layout
 
-| n | l | orbital |
-| - | - | ------- |
-| 1 | 0 | 1s      |
-| 2 | 0 | 2s      |
-| 2 | 1 | 2p      |
-| 3 | 0 | 3s      |
-| 3 | 1 | 3p      |
-| 3 | 2 | 3d      |
-| 4 | 0 | 4s      |
-| 4 | 1 | 4p      |
-| 4 | 2 | 4d      |
-| 4 | 3 | 4f      |
-
----
-
-## Installation
-
-Install dependencies:
-
-```bash
-pip install numpy matplotlib scipy
+```text
+orbital_simulator.py  Command-line simulator and plotting functions
+derivations.ipynb     Step-by-step mathematical derivation and exploration
+assets/               Images used by this README
+outputs/              Example generated figures
+requirements.txt      Runtime dependencies
 ```
 
----
+The former `main.py` and `main2.py` scratch files were consolidated into
+`orbital_simulator.py` so there is one documented implementation.
+
+## Setup
+
+```bash
+python -m venv .venv
+```
+
+Activate the environment:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+```bash
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
 
 ## Usage
 
-Run the script:
+Display the default $2p_z$ state:
 
 ```bash
 python orbital_simulator.py
 ```
 
-Change quantum numbers in code:
+Choose a state and save the plot:
 
-```python
-n = 2
-l = 0
-m = 0
+```bash
+python orbital_simulator.py --n 3 --l 2 --m 0 --output outputs/orbital_320.png
 ```
 
-Examples:
+Useful options:
 
-```python
-# 1s orbital
-n=1; l=0; m=0
-
-# 2s orbital
-n=2; l=0; m=0
-
-# 2p orbital
-n=2; l=1; m=0
-
-# 3d orbital
-n=3; l=2; m=1
+```text
+--n, --l, --m       Quantum numbers
+--extent            Half-width of the x-z slice in Bohr radii
+--resolution        Number of samples along each axis
+--output            Image path; omit to open an interactive window
 ```
 
----
+To follow the derivation interactively:
 
-## Example Output
-
-2s orbital:
-
-* Bright center
-* Dark radial node
-* Outer probability shell
-
-2p orbital:
-
-* Two lobes
-* Angular node at nucleus plane
-
----
-
-## Mathematical Implementation
-
-Radial function:
-
-$R_{n\ell}(r)$
-============
-$$
-\sqrt{
-\left(\frac{2}{n}\right)^3
-\frac{(n-\ell-1)!}{2n(n+\ell)!}
-}
-,
-e^{-r/n}
-,
-\left(\frac{2r}{n}\right)^\ell
-,
-L_{n-\ell-1}^{2\ell+1}
-\left(\frac{2r}{n}\right)
-$$
-
-Angular function:
-
-$$
-Y_\ell^m(\theta,\phi)
-$$
-
-Computed using SciPy.
-
----
-
-## Coordinate System
-
-Simulation uses a spatial grid:
-
-$$
-(x,z)
-$$
-
-Converted to spherical coordinates:
-
-$$
-r = \sqrt{x^2 + y^2 + z^2}
-$$
-
-$$
-\theta = \cos^{-1}(z/r)
-$$
-
-$$
-\phi = \tan^{-1}(y/x)
-$$
-
----
-
-## Visualization
-
-Uses matplotlib heatmap:
-
-```python
-plt.imshow(density, cmap="inferno")
+```bash
+python -m pip install jupyter
+jupyter notebook derivations.ipynb
 ```
 
-Higher brightness = higher electron probability.
+## Numerical scope
 
----
+- The wavefunctions are analytical; numerical discretization is used only to
+  sample and display them.
+- The current visualization is an x-z plane with $y=0$, not a full 3D orbital.
+- Brightness in the density panel represents probability density, not a
+  classical electron trajectory.
 
-## Example Project Structure
+## License and contact
 
-```
-hydrogen-orbital-simulator/
-│
-├── orbital_simulator.py
-├── README.md
-└── examples/
-```
+The repository is distributed under CC BY 4.0; see [LICENSE](LICENSE).
 
----
-
-## Dependencies
-
-* numpy
-* scipy
-* matplotlib
-
----
-
-## Accuracy
-
-This simulator uses exact analytical solutions from quantum mechanics.
-
-No approximations are used beyond numerical discretization.
-
----
-
-## Future Improvements
-
-* 3D volumetric rendering
-* Interactive visualization
-* Orbital superposition
-* Animation of quantum states
-* GPU acceleration
-
----
-
-## Educational Applications
-
-Useful for:
-
-* Quantum mechanics students
-* Physics visualization
-* Teaching atomic structure
-* Computational physics learning
-
----
-
-## License
-CC - License
+Maintainer: Shaurya Attreya — shauryaattreya@gmail.com
